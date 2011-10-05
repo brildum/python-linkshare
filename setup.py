@@ -1,6 +1,6 @@
 
 import os
-from setuptools import setup
+from setuptools import setup, find_packages
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
@@ -14,7 +14,7 @@ setup(
     license = "BSD",
     keywords = "linkshare affiliate",
     url = "https://github.com/brildum/python-linkshare",
-    package_dir = {'': 'src'},
+    packages = find_packages(),
     long_description=read('README'),
     classifiers=[
         "Development Status :: 3 - Alpha",
