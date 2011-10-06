@@ -3,9 +3,8 @@ import urllib2
 from lxml import objectify
 
 USER_AGENT = 'python-linkshare'
-_PRODUCT_SEARCH_URL = "http://productsearch.linksynergy.com/productsearch?token={0}"
-_RESULTS_URL = "{0}&MaxResults={1}&pagenumber={2}"
-_MAX_RESULTS = 20
+PRODUCT_SEARCH_URL = "http://productsearch.linksynergy.com/productsearch?token={0}"
+RESULTS_URL = "{0}&MaxResults={1}&pagenumber={2}"
 
 class API(object):
     def __init__(self, token='', max_results=20, **kwargs):
@@ -13,7 +12,7 @@ class API(object):
         self.max_results = max_results
 
     def product_search(self, mid=None, keyword=None, cat=None, sorts=None, sorttypes=None):
-        search_url_parts = [_PRODUCT_SEARCH_URL.format(self.token)]
+        search_url_parts = [PRODUCT_SEARCH_URL.format(self.token)]
         if mid is not None:
             search_url_parts.append('mid={0}'.format(mid))
         if keyword is not None:
@@ -26,7 +25,7 @@ class API(object):
             for sort, sorttype in zip(sorts, sorttypes):
                 search_url_parts.append('sort={0}&sorttype={1}'.format(sort, sorttype))
         search_url = '&'.join(search_url_parts)
-        return _results_generator(search_url, _MAX_RESULTS)
+        return _results_generator(search_url, self.max_results)
 
 class MerchantAPI(API):
     def __init__(self, mid='', **kwargs):
@@ -42,7 +41,7 @@ def _results_generator(base_url, max_results):
     opener = urllib2.build_opener()
     headers = {'User-Agent': USER_AGENT}
     while True:
-        request = urllib2.Request(_RESULTS_URL.format(base_url, max_results, page),
+        request = urllib2.Request(RESULTS_URL.format(base_url, max_results, page),
                 headers=headers)
         result = objectify.parse(opener.open(request)).getroot()
         if hasattr(result, 'item'):
