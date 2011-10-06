@@ -49,3 +49,4 @@ def _results_generator(base_url, max_results):
                 yield item
         else:
             break
+        page += 1
