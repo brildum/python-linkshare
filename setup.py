@@ -2,6 +2,10 @@
 import os
 from setuptools import setup, find_packages
 
+DEPENDENCIES = [
+    'lxml>=2.3',
+]
+
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
@@ -16,6 +20,7 @@ setup(
     url = "https://github.com/brildum/python-linkshare",
     packages = find_packages(),
     long_description=read('README'),
+    install_requires=DEPENDENCIES,
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Topic :: Utilities",
