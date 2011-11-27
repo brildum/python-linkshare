@@ -1,0 +1,16 @@
+A simple Python client to query Linkshare's Merchant API.
+
+Below is a simple example of querying affiliate links from a merchant.
+
+import linkshare
+
+API_KEY = 'your-api-key-here'
+MERCHANT_ID = 'merchant-id-here'
+
+api = linkshare.MerchantAPI(token=API_KEY, mid=MERCHANT_ID)
+for product in api.product_search(keyword='laptop cases'):
+    print("Product Name: {0}".format(product.productname))
+    print("Product Price: {0}".format(product.price))
+    print("Product URL: {0}".format(product.linkurl))
+    print("")
+
